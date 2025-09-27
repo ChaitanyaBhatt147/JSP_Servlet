@@ -1,4 +1,0 @@
-INDEX VERSION 1.131+C:\Users\Lenovo\eclipse-workspace\JSP_Servlet\.metadata\.plugins\org.eclipse.jdt.core
-2072412205.index
-1231765208.index
-1024446143.index
