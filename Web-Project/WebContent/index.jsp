@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<%@ include file="Header.jsp"%>
 	<div align="center">
 		<h1>Hello world</h1>
 		<h2>Hello World</h2>
@@ -15,5 +16,6 @@
 		<h5>Hello World</h5>
 		<h6>Hello World</h6>
 	</div>
+	<%@ include file="Footer.jsp"%>
 </body>
 </html>

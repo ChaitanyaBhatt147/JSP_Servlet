@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="Header.jsp"%>
-	<div align="center">
-		<h1>Login View</h1>
-	</div>
-	<%@ include file="Footer.jsp"%>
+	<a href="LoginClt">Login</a> |
+	<a href="UserRegistrationClt">SignUp</a>
+
 </body>
 </html>
