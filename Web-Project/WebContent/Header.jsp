@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<%
+		UserBean user= (UserBean) session.getAttribute("user");
+	%>
+
 	<a href="LoginClt">Login</a> |
 	<a href="UserRegistrationClt">SignUp</a>
 
