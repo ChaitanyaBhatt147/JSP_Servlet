@@ -18,7 +18,15 @@ public class LogiClt extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.sendRedirect("LoginView.jsp");
+		String op = request.getParameter("operation");
+		System.out.println("op -----> "+op);
+		if (op != null) {
+			HttpSession session = request.getSession();
+			session.invalidate();
+			request.setAttribute("successMsg", "User Logout Successfully");
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("LoginView.jsp");
+		rd.forward(request, response);
 	}
 
 	
@@ -33,17 +41,16 @@ public class LogiClt extends HttpServlet {
 			bean = model.authenticator(email, password);
 			if (bean != null) {
 				System.out.println("Login Successfull");
-				session.setAttribute("user", bean);
+				session.setAttribute("user", bean);	
 				response.sendRedirect("WelcomeView.jsp");
 			} else {
-				System.out.println("Invalid login or password");
 				request.setAttribute("errorMsg", "Invalid login or password");
+				RequestDispatcher rd = request.getRequestDispatcher("LoginView.jsp");
+				rd.forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("LoginView.jsp");
-		rd.forward(request, response);
 	}
 
 }

@@ -8,19 +8,27 @@
 </head>
 <body>
 	<%@ include file="Header.jsp"%>
-	<%
-		String errorMsg = (String) request.getAttribute("errorMsg");
-	%>
-	<%
-		if (errorMsg != null) {
-	%>
-	<h2 style="color: red;"><%=errorMsg%></h2>
-	<%
-		}
-	%>
-	<div align="center">
-		<h1>Login View</h1>
 		<form action="LoginClt" method="post">
+		<div align="center">
+			<h1>Login View</h1>
+			<%
+				String successMsg = (String) request.getAttribute("successMsg");
+				String errorMsg = (String) request.getAttribute("errorMsg");
+			%>
+			<%
+				if (successMsg != null) {
+			%>
+			<h2 style="color: green;"><%=successMsg%></h2>
+			<%
+				}
+			%>
+			<%
+				if (errorMsg != null) {
+			%>
+			<h3 style="color: red;"><%=errorMsg%></h3>
+			<%
+				}
+			%>
 			<table>
 				<tr>
 					<th>Email</th>
@@ -38,7 +46,7 @@
 					</td>
 				</tr>
 			</table>
-		</form>
+	</form>
 	</div>
 	<%@ include file="Footer.jsp"%>
 </body>
