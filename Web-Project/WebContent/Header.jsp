@@ -28,12 +28,13 @@
 	<%
 		if (user != null) {
 	%>
-	<a href="LoginClt?operation=logout">Logout</a>
+	<a href="UserListCtl">User List</a> |
+	<a href="LoginCtl?operation=logout">Logout</a> 
 	<%
 		} else {
 	%>
-	<a href="LoginClt">Login</a> |
-	<a href="UserRegistrationClt">SignUp</a>
+	<a href="LoginCtl">Login</a> |
+	<a href="UserRegistrationCtl">SignUp</a>
 	<%
 		}
 	%>

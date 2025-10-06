@@ -14,8 +14,8 @@ import com.rays.bean.UserBean;
 import com.rays.model.UserModel;
 
 
-@WebServlet("/UserRegistrationClt")
-public class UserRegistrationClt extends HttpServlet {
+@WebServlet("/UserRegistrationCtl")
+public class UserRegistrationCtl extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.sendRedirect("UserRegistrationView.jsp");

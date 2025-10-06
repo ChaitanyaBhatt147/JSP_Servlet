@@ -12,9 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.rays.bean.UserBean;
 import com.rays.model.UserModel;
-
-@WebServlet("/LoginClt")
-public class LogiClt extends HttpServlet {
+@WebServlet("/LoginCtl")
+public class LoginCtl extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

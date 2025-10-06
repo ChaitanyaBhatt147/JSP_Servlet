@@ -30,7 +30,7 @@
 			}
 		%>
 		
-		<form action="UserRegistrationClt" method="post">
+		<form action="UserRegistrationCtl" method="post">
 			<table>
 				<tr>
 					<th>First Name</th>
