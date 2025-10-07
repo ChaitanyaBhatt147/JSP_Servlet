@@ -18,7 +18,7 @@
 		<%
 			if (successMsg != null) {
 		%>
-		<h2 style="color: green;"><%=successMsg%></h2>
+		<h3 style="color: green;"><%=successMsg%></h3>
 		<%
 			}
 		%>

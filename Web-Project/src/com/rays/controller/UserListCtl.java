@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.rays.bean.UserBean;
 import com.rays.model.UserModel;
 
-
 @WebServlet("/UserListCtl")
 public class UserListCtl extends HttpServlet {
 
@@ -27,11 +26,37 @@ public class UserListCtl extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd  = request.getRequestDispatcher("UserListView.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("UserListView.jsp");
 		rd.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		UserModel model = new UserModel();
+		UserBean bean = new UserBean();
+		String[] ids = request.getParameterValues("ids");
+
+		if (request.getParameter("operation").equals("delete")) {
+			if (ids != null && ids.length > 0) {
+				for (String id : ids) {
+					try {
+						model.Delete(Integer.parseInt(id));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				request.setAttribute("successMsg", "Record deleted successfully");
+			} else {
+				request.setAttribute("errorMsg", "Plesae select at least one record");				
+			}
+		}
+		try {
+			List list = model.search(bean);
+			request.setAttribute("list", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("UserListView.jsp");
+		rd.forward(request, response);
 	}
 }

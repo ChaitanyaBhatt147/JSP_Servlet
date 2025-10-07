@@ -15,6 +15,7 @@
 		<form action="UserListCtl" method="post">
 			<table border="1px" width="100%">
 				<tr style="background-color: skyBlue;">
+					<th>Delete</th>
 					<th>ID</th>
 					<th>First Name</th>
 					<th>Last Name</th>
@@ -23,6 +24,22 @@
 				</tr>
 				<%
 					List list = (List) request.getAttribute("list");
+					String successMsg = (String) request.getAttribute("successMsg");
+					String errorMsg = (String) request.getAttribute("errorMsg");
+				%>
+				<%
+					if (successMsg != null) {
+				%>
+				<h3 style="color: green;"><%=successMsg%></h3>
+				<%
+					}
+				%>
+				<%
+					if (errorMsg != null) {
+				%>
+				<h3 style="color: red;"><%=errorMsg%></h3>
+				<%
+					}
 				%>
 				<%
 					Iterator<UserBean> it = list.iterator();
@@ -32,6 +49,7 @@
 						UserBean bean = it.next();
 				%>
 				<tr align="center" style="background-color: #d3d3d3;">
+					<td><input type="checkbox" name="ids" value=<%=bean.getId()%>></td>
 					<td><%=bean.getId()%></td>
 					<td><%=bean.getFirstName()%></td>
 					<td><%=bean.getLastName()%></td>
@@ -41,6 +59,12 @@
 				<%
 					}
 				%>
+			</table>
+			<table>
+				<tr>
+					<th></th>
+					<td><input type="submit" name="operation" value="delete"></td>
+				</tr>
 			</table>
 		</form>
 	</div>

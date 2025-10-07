@@ -57,13 +57,13 @@ public class UserModel {
 	}
 
 //	delete record
-	public void Delete(UserBean bean) throws Exception {
+	public void Delete(int id) throws Exception {
 		Connection conn = null;
 		try {
 			conn = JDBCDataSource.getConnection();
 			conn.setAutoCommit(false);
 			PreparedStatement pstmt = conn.prepareStatement("delete from st_user where id = ?");
-			pstmt.setInt(1, bean.getId());
+			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
 			conn.commit();
 			System.out.println("Data deleted successfully.");
