@@ -30,64 +30,80 @@ public class UserModel {
 //	insert record
 	public void add(UserBean bean) throws Exception {
 		Connection comm = null;
-		UserBean existBean = findByLogin(bean.getLogin());
+		try {
+			UserBean existBean = findByLogin(bean.getLogin());
 
-		if (existBean != null) {
-			throw new DuplicateRecordException("User alrady Exist.");
+			if (existBean != null) {
+				throw new RuntimeException("User alrady Exist");
+			}
+			comm = JDBCDataSource.getConnection();
+			comm.setAutoCommit(false);
+			PreparedStatement pstmt = comm.prepareStatement("insert into st_user values (?,?,?,?,?,?)");
+			pstmt.setInt(1, nextPk());
+			pstmt.setString(2, bean.getFirstName());
+			pstmt.setString(3, bean.getLastName());
+			pstmt.setString(4, bean.getLogin());
+			pstmt.setString(5, bean.getPassword());
+			pstmt.setDate(6, new java.sql.Date(bean.getDob().getTime()));
+			int i = pstmt.executeUpdate();
+			comm.commit();
+			System.out.println("Data inserted successfully: " + i);
+		} catch (Exception e) {
+			System.out.println("Transaction is rolled back");
+			comm.rollback();
+		} finally {
+			comm.close();
 		}
-		comm = JDBCDataSource.getConnection();
-		Statement stmt = comm.createStatement();
-		PreparedStatement pstmt = comm.prepareStatement("insert into st_user values (?,?,?,?,?,?)");
-		pstmt.setInt(1, nextPk());
-		pstmt.setString(2, bean.getFirstName());
-		pstmt.setString(3, bean.getLastName());
-		pstmt.setString(4, bean.getLogin());
-		pstmt.setString(5, bean.getPassword());
-		pstmt.setDate(6, new java.sql.Date(bean.getDob().getTime()));
-		int i = pstmt.executeUpdate();
-		comm.commit();
-		System.out.println("Data inserted successfully: " + i);
-
-		comm.close();
 	}
 
 //	delete record
 	public void Delete(UserBean bean) throws Exception {
 		Connection conn = null;
-		conn = JDBCDataSource.getConnection();
-		Statement stmt = conn.createStatement();
-		PreparedStatement pstmt = conn.prepareStatement("delete from st_user where id = ?");
-		pstmt.setInt(1, bean.getId());
-		pstmt.executeUpdate();
-		System.out.println("Data deleted successfully.");
-		conn.close();
-
+		try {
+			conn = JDBCDataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement pstmt = conn.prepareStatement("delete from st_user where id = ?");
+			pstmt.setInt(1, bean.getId());
+			pstmt.executeUpdate();
+			conn.commit();
+			System.out.println("Data deleted successfully.");
+		} catch (Exception e) {
+			System.out.println("Transaction is rolled back");
+			conn.rollback();
+		} finally {
+			conn.close();
+		}
 	}
 
 //	update record
 	public void Update(UserBean bean) throws Exception {
 		Connection conn = null;
-		conn = JDBCDataSource.getConnection();
-		Statement stmt = conn.createStatement();
-		PreparedStatement pstmt = conn.prepareStatement(
-				"update st_user set firstName = ?, lastName = ?, login = ?, password = ?, dob = ? where id =?");
-		pstmt.setString(1, bean.getFirstName());
-		pstmt.setString(2, bean.getLastName());
-		pstmt.setString(3, bean.getLogin());
-		pstmt.setString(4, bean.getPassword());
-		pstmt.setDate(5, new java.sql.Date(bean.getDob().getTime()));
-		pstmt.setInt(6, bean.getId());
-		pstmt.executeUpdate();
-		System.out.println("Data Upadated successfully.");
-		conn.close();
-
+		try {
+			conn = JDBCDataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement pstmt = conn.prepareStatement(
+					"update st_user set firstName = ?, lastName = ?, login = ?, password = ?, dob = ? where id =?");
+			pstmt.setString(1, bean.getFirstName());
+			pstmt.setString(2, bean.getLastName());
+			pstmt.setString(3, bean.getLogin());
+			pstmt.setString(4, bean.getPassword());
+			pstmt.setDate(5, new java.sql.Date(bean.getDob().getTime()));
+			pstmt.setInt(6, bean.getId());
+			pstmt.executeUpdate();
+			conn.commit();
+			System.out.println("Data Upadated successfully.");
+		} catch (Exception e) {
+			System.out.println("Transaction is rolled back");
+			conn.rollback();
+		} finally {
+			conn.close();
+		}
 	}
 
 //	find by login id
 	public UserBean findByLogin(String login) throws Exception {
 		Connection conn = null;
 		conn = JDBCDataSource.getConnection();
-		Statement stmt = conn.createStatement();
 		PreparedStatement pstmt = conn.prepareStatement("select * from st_user where login = ?");
 		pstmt.setString(1, login);
 		ResultSet rs = pstmt.executeQuery();
@@ -109,7 +125,6 @@ public class UserModel {
 	public UserBean authenticator(String login, String password) throws Exception {
 		Connection conn = null;
 		conn = JDBCDataSource.getConnection();
-		Statement stmt = conn.createStatement();
 		PreparedStatement pstmt = conn.prepareStatement("select * from st_user where login = ? and password = ?");
 		pstmt.setString(1, login);
 		pstmt.setString(2, password);
@@ -131,25 +146,31 @@ public class UserModel {
 //	Change password
 	public void changePassword(String login, String password, String newPassword) throws Exception {
 		Connection conn = null;
-		if (password != newPassword) {
-			UserBean bean = authenticator(login, password);
+		try {
+			if (password != newPassword) {
+				UserBean bean = authenticator(login, password);
 
-			if (bean != null) {
-				conn = JDBCDataSource.getConnection();
-				Statement stmt = conn.createStatement();
-				PreparedStatement pstmt = conn.prepareStatement("update st_user set password = ? where id =?");
-				pstmt.setString(1, newPassword);
-				pstmt.setInt(2, bean.getId());
-				pstmt.executeUpdate();
-				conn.commit();
-				System.out.println("Password changed successfully");
+				if (bean != null) {
+					conn = JDBCDataSource.getConnection();
+					conn.setAutoCommit(false);
+					PreparedStatement pstmt = conn.prepareStatement("update st_user set password = ? where id =?");
+					pstmt.setString(1, newPassword);
+					pstmt.setInt(2, bean.getId());
+					pstmt.executeUpdate();
+					conn.commit();
+					System.out.println("Password changed successfully");
+				} else {
+					throw new RuntimeException("Invalid Username or Password");
+				}
 			} else {
-				throw new RecordNotFoundException("Wrong Username or Password");
+				throw new RuntimeException("Both the oldPassword and newPasswoed both are same.");
 			}
-		} else {
-			throw new DuplicateRecordException("Both the oldPassword and newPasswoed both are same.");
+		} catch (Exception e) {
+			System.out.println("Transaction is rolled back");
+			conn.rollback();
+		} finally {
+			conn.close();
 		}
-		conn.close();
 
 	}
 
@@ -159,7 +180,7 @@ public class UserModel {
 		if (bean != null) {
 			System.out.println("Password: " + bean.getPassword());
 		} else {
-			throw new RecordNotFoundException("User does not exist.");
+			throw new RuntimeException("User does not exist.");
 		}
 	}
 
@@ -167,7 +188,6 @@ public class UserModel {
 	public UserBean findById(int id) throws Exception {
 		Connection conn = null;
 		conn = JDBCDataSource.getConnection();
-		Statement stmt = conn.createStatement();
 		PreparedStatement pstmt = conn.prepareStatement("select * from st_user where id = ?");
 		pstmt.setInt(1, id);
 		ResultSet rs = pstmt.executeQuery();
@@ -214,7 +234,6 @@ public class UserModel {
 
 		Connection conn = null;
 		conn = JDBCDataSource.getConnection();
-		Statement stmt = conn.createStatement();
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		ResultSet rs = pstmt.executeQuery();
 

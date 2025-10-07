@@ -8,9 +8,8 @@
 </head>
 <body>
 	<%@ include file="Header.jsp"%>
-
-	<div align="center">
-		<h1>Login View</h1>
+	<div align="Center">
+		<h3>Change Password</h3>
 		<%
 			String successMsg = (String) request.getAttribute("successMsg");
 			String errorMsg = (String) request.getAttribute("errorMsg");
@@ -18,7 +17,7 @@
 		<%
 			if (successMsg != null) {
 		%>
-		<h2 style="color: green;"><%=successMsg%></h2>
+		<h3 style="color: green;"><%=successMsg%></h3>
 		<%
 			}
 		%>
@@ -29,23 +28,27 @@
 		<%
 			}
 		%>
-		<form action="LoginCtl" method="post">
-		
+		<form action="ChangePasswordCtl" method="post">
 			<table>
 				<tr>
-					<th>Email</th>
-					<td><input type="email" name="login" value=""
-						placeholder="Enter Email"></td>
+					<th>Old Password</th>
+					<td><input type="password" name="oldPassword" value=""
+						placeholder="Enter Password"></td>
 				</tr>
 				<tr>
-					<th>Password</th>
-					<td><input type="password" name="password" value=""
+					<th>New Password</th>
+					<td><input type="password" name="newPassword" value=""
+						placeholder="Enter Password"></td>
+				</tr>
+				<tr>
+					<th>Confirm Password</th>
+					<td><input type="password" name="confirmPassword" value=""
 						placeholder="Enter Password"></td>
 				</tr>
 				<tr>
 					<th></th>
-					<td><input type="submit" name="operations" value="Login">
-					</td>
+					<td><input type="submit" name="operations"
+						value="Change Password"></td>
 				</tr>
 			</table>
 		</form>

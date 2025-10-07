@@ -30,18 +30,20 @@ public class LoginCtl extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("post");
 		UserBean bean = new UserBean();
 		UserModel model = new UserModel();
 		HttpSession session = request.getSession();
 		
 		String email = request.getParameter("login");
 		String password = request.getParameter("password");
+		
 		try {
 			bean = model.authenticator(email, password);
 			if (bean != null) {
 				System.out.println("Login Successfull");
 				session.setAttribute("user", bean);	
-				response.sendRedirect("WelcomeView.jsp");
+				response.sendRedirect("WelcomeView.jsp	");
 			} else {
 				request.setAttribute("errorMsg", "Invalid login or password");
 				RequestDispatcher rd = request.getRequestDispatcher("LoginView.jsp");
