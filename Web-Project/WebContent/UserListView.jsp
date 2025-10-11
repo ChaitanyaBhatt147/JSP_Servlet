@@ -13,6 +13,20 @@
 	<div align="center">
 		<h3>User List</h3>
 		<form action="UserListCtl" method="post">
+			<table>
+				<tr>
+					<th>Search</th>
+					<td><input type="text" name="searchByFirstName" value=""
+						placeholder="Search by First name"></td>
+					<td><input type="text" name="searchByLastName" value=""
+						placeholder="Search by Last name"></td>
+					<td><input type="text" name="searchByLogin" value=""
+						placeholder="Search by Login"></td>
+					<td><input type="text" name="searchByDob" value=""
+						placeholder="Search by DOB"></td>
+					<td><input type="submit" name="operation" value="search"></td>
+				</tr>
+			</table>
 			<table border="1px" width="100%">
 				<tr style="background-color: skyBlue;">
 					<th>Delete</th>
@@ -21,6 +35,7 @@
 					<th>Last Name</th>
 					<th>Login</th>
 					<th>Date Of Birth</th>
+					<th>Edit</th>
 				</tr>
 				<%
 					List list = (List) request.getAttribute("list");
@@ -55,6 +70,7 @@
 					<td><%=bean.getLastName()%></td>
 					<td><%=bean.getLogin()%></td>
 					<td><%=bean.getDob()%></td>
+					<td><a href="UserCtl?id=<%=bean.getId()%>">edit</a></td>
 				</tr>
 				<%
 					}
