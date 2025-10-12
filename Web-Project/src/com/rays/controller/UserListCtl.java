@@ -1,6 +1,7 @@
 package com.rays.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -35,6 +36,7 @@ public class UserListCtl extends HttpServlet {
 		UserModel model = new UserModel();
 		UserBean bean = new UserBean();
 		String[] ids = request.getParameterValues("ids");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		if (request.getParameter("operation").equals("delete")) {
 			if (ids != null && ids.length > 0) {
@@ -47,7 +49,42 @@ public class UserListCtl extends HttpServlet {
 				}
 				request.setAttribute("successMsg", "Record deleted successfully");
 			} else {
-				request.setAttribute("errorMsg", "Plesae select at least one record");				
+				request.setAttribute("errorMsg", "Plesae select at least one record");
+			}
+		}
+		if (request.getParameter("operation").equals("search")) {
+			if (request.getParameter("searchByFirstName")!= null) {
+				bean.setFirstName(request.getParameter("searchByFirstName"));
+				try {
+					model.search(bean);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (request.getParameter("searchByLastName")!= null) {
+				bean.setLastName(request.getParameter("searchByLastName"));
+				try {
+					model.search(bean);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (request.getParameter("searchByLogin")!= null) {
+				bean.setLogin(request.getParameter("searchByLogin"));
+				try {
+					model.search(bean);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (request.getParameter("searchByDob")!= null) {
+				try {
+					bean.setDob(sdf.parse(request.getParameter("searchByFirstName")));
+					model.search(bean);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		try {
