@@ -36,6 +36,8 @@
 				<tr>
 					<td><input type="hidden" name="id"
 						value="<%=bean != null ? bean.getId() : ""%>"></td>
+				</tr>
+				<tr>
 					<th>First Name</th>
 					<td><input type="text" name="firstName"
 						value="<%=bean != null ? bean.getFirstName() : ""%>"

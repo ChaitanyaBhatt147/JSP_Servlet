@@ -22,7 +22,7 @@
 						placeholder="Search by Last name"></td>
 					<td><input type="text" name="searchByLogin" value=""
 						placeholder="Search by Login"></td>
-					<td><input type="text" name="searchByDob" value=""
+					<td><input type="date" name="searchByDob" value=""
 						placeholder="Search by DOB"></td>
 					<td><input type="submit" name="operation" value="search"></td>
 				</tr>

@@ -36,7 +36,7 @@ public class UserListCtl extends HttpServlet {
 		UserModel model = new UserModel();
 		UserBean bean = new UserBean();
 		String[] ids = request.getParameterValues("ids");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
 		if (request.getParameter("operation").equals("delete")) {
 			if (ids != null && ids.length > 0) {
