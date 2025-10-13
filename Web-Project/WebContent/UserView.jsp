@@ -9,11 +9,21 @@
 <body>
 	<%@ include file="Header.jsp"%>
 	<div align="center">
-		<h1>Registration Page</h1>
 		<%
 			String successMsg = (String) request.getAttribute("successMsg");
 			String errorMsg = (String) request.getAttribute("errorMsg");
 			UserBean bean = (UserBean) request.getAttribute("bean");
+		%>
+		<%
+			if (bean != null && bean.getId() > 0) {
+		%>
+		<h3>Update User</h3>
+		<%
+			} else {
+		%>
+		<h3>Add User</h3>
+		<%
+			}
 		%>
 		<%
 			if (successMsg != null) {
@@ -69,7 +79,7 @@
 				<tr>
 					<th></th>
 					<td><input type="submit" name="operations"
-						value="<%=bean != null ? "Update" : "Signup"%>"></td>
+						value="<%=bean != null ? "Update" : "Add User"%>"></td>
 				</tr>
 			</table>
 		</form>

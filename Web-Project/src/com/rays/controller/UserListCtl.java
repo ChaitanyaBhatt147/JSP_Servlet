@@ -1,6 +1,7 @@
 package com.rays.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -21,9 +22,14 @@ public class UserListCtl extends HttpServlet {
 			throws ServletException, IOException {
 		UserModel model = new UserModel();
 		UserBean bean = new UserBean();
+		int pageNo =1;
+		int pageSize =5;
 		try {
-			List list = model.search(bean);
+			List list = model.search(bean,pageNo,pageSize);
+			List nextList = model.search(bean,pageNo+1,pageSize);
 			request.setAttribute("list", list);
+			request.setAttribute("nextList", nextList);
+			request.setAttribute("pageNo", pageNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,7 +42,9 @@ public class UserListCtl extends HttpServlet {
 		UserModel model = new UserModel();
 		UserBean bean = new UserBean();
 		String[] ids = request.getParameterValues("ids");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		int pageNo =1;
+		int pageSize =5;
 
 		if (request.getParameter("operation").equals("delete")) {
 			if (ids != null && ids.length > 0) {
@@ -52,44 +60,36 @@ public class UserListCtl extends HttpServlet {
 				request.setAttribute("errorMsg", "Plesae select at least one record");
 			}
 		}
+		if (request.getParameter("operation").equals("next")) {
+			pageNo =(Integer) Integer.parseInt(request.getParameter("pageNo"));
+			pageNo++;
+		}
+		if (request.getParameter("operation").equals("previous")) {
+			pageNo =(Integer) Integer.parseInt(request.getParameter("pageNo"));
+			pageNo--;
+		}
 		if (request.getParameter("operation").equals("search")) {
-			if (request.getParameter("searchByFirstName")!= null) {
 				bean.setFirstName(request.getParameter("searchByFirstName"));
-				try {
-					model.search(bean);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			if (request.getParameter("searchByLastName")!= null) {
 				bean.setLastName(request.getParameter("searchByLastName"));
-				try {
-					model.search(bean);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			if (request.getParameter("searchByLogin")!= null) {
 				bean.setLogin(request.getParameter("searchByLogin"));
 				try {
-					model.search(bean);
+					bean.setDob(sdf.parse(request.getParameter("searchByDob")));
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+				try {
+					model.search(bean,pageNo,pageSize);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
-			if (request.getParameter("searchByDob")!= null) {
-				try {
-					bean.setDob(sdf.parse(request.getParameter("searchByFirstName")));
-					model.search(bean);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
 		}
+		
 		try {
-			List list = model.search(bean);
+			List list = model.search(bean,pageNo,pageSize);
+			List nextList = model.search(bean,pageNo+1,pageSize);
 			request.setAttribute("list", list);
+			request.setAttribute("nextList", nextList);
+			request.setAttribute("pageNo", pageNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

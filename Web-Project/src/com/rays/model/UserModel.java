@@ -3,7 +3,6 @@ package com.rays.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +29,12 @@ public class UserModel {
 //	insert record
 	public void add(UserBean bean) throws Exception {
 		Connection comm = null;
-		try {
-			UserBean existBean = findByLogin(bean.getLogin());
+		UserBean existBean = findByLogin(bean.getLogin());
 
-			if (existBean != null) {
-				throw new RuntimeException("User alrady Exist");
-			}
+		if (existBean != null) {
+			throw new DuplicateRecordException("User alrady Exist");
+		}
+		try {
 			comm = JDBCDataSource.getConnection();
 			comm.setAutoCommit(false);
 			PreparedStatement pstmt = comm.prepareStatement("insert into st_user values (?,?,?,?,?,?)");
@@ -160,10 +159,10 @@ public class UserModel {
 					conn.commit();
 					System.out.println("Password changed successfully");
 				} else {
-					throw new RuntimeException("Invalid Username or Password");
+					throw new RecordNotFoundException("Invalid Username or Password");
 				}
 			} else {
-				throw new RuntimeException("Both the oldPassword and newPasswoed both are same.");
+				throw new DuplicateRecordException("Both the oldPassword and newPasswoed both are same.");
 			}
 		} catch (Exception e) {
 			System.out.println("Transaction is rolled back");
@@ -180,7 +179,7 @@ public class UserModel {
 		if (bean != null) {
 			System.out.println("Password: " + bean.getPassword());
 		} else {
-			throw new RuntimeException("User does not exist.");
+			throw new RecordNotFoundException("User does not exist.");
 		}
 	}
 
@@ -208,7 +207,7 @@ public class UserModel {
 //	Search() will search multiple record.
 //	if SQL injunction is true then we can append as many as quarry in one quarry
 
-	public List search(UserBean bean) throws Exception {
+	public List search(UserBean bean, int pageNo,int pageSize) throws Exception {
 		ArrayList list = new ArrayList();
 		StringBuffer sql = new StringBuffer("select * from st_user where 1 = 1");
 		if (bean != null) {
@@ -228,8 +227,12 @@ public class UserModel {
 				sql.append(" and password like '%" + bean.getPassword() + "%'");
 			}
 			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
-				sql.append(" and dob like '" + new java.sql.Date(bean.getDob().getTime()) + "'");
+				sql.append(" and dob = '" + new java.sql.Date(bean.getDob().getTime()) + "'");
 			}
+		}
+		if (pageSize >0) {
+			pageNo = (pageNo -1)*pageSize;
+			sql.append(" limit "+pageNo+", "+pageSize);
 		}
 
 		Connection conn = null;
