@@ -14,17 +14,7 @@
 			String errorMsg = (String) request.getAttribute("errorMsg");
 			UserBean bean = (UserBean) request.getAttribute("bean");
 		%>
-		<%
-			if (bean != null && bean.getId() > 0) {
-		%>
-		<h3>Update User</h3>
-		<%
-			} else {
-		%>
-		<h3>Add User</h3>
-		<%
-			}
-		%>
+		<h3>My Profile</h3>
 		<%
 			if (successMsg != null) {
 		%>
@@ -32,7 +22,6 @@
 		<%
 			}
 		%>
-
 		<%
 			if (errorMsg != null) {
 		%>
@@ -41,45 +30,35 @@
 			}
 		%>
 
-		<form action="UserCtl.do" method="post">
+		<form action="MyProfileCtl" method="post">
 			<table>
 				<tr>
-					<td><input type="hidden" name="id"
-						value="<%=bean != null ? bean.getId() : ""%>"></td>
+					<td><input type="hidden" name="id" value=<%=bean.getId()%>></td>
 				</tr>
 				<tr>
 					<th>First Name</th>
-					<td><input type="text" name="firstName"
-						value="<%=bean != null ? bean.getFirstName() : ""%>"
-						placeholder="Enter First Name"></td>
+					<td><input type="text" name="firstName"	value=<%=bean.getFirstName()%>></td>
 				</tr>
 				<tr>
 					<th>Last Name</th>
-					<td><input type="text" name="lastName"
-						value="<%=bean != null ? bean.getLastName() : ""%>"
-						placeholder="Enter Last Name"></td>
+					<td><input type="text" name="lastName" value=<%=bean.getLastName()%>></td>
 				</tr>
 				<tr>
 					<th>Email</th>
-					<td><input type="email" name="login"
-						value="<%=bean != null ? bean.getLogin() : ""%>"
-						placeholder="Enter Email"></td>
+					<td><input type="email" name="login" value=<%=bean.getLogin()%>></td>
 				</tr>
 				<tr>
 					<th>Password</th>
 					<td><input type="password" name="password"
-						value="<%=bean != null ? bean.getPassword() : ""%>"
-						placeholder="Enter Password"></td>
+						value="<%=bean.getPassword()%>"></td>
 				</tr>
 				<tr>
 					<th>DOB</th>
-					<td><input type="date" name="dob"
-						value="<%=bean != null ? bean.getDob() : ""%>"></td>
+					<td><input type="date" name="dob" value=<%=bean.getDob()%>></td>
 				</tr>
 				<tr>
 					<th></th>
-					<td><input type="submit" name="operations"
-						value="<%=bean != null ? "Update" : "Add User"%>"></td>
+					<td><input type="submit" name="operations" value="Update"></td>
 				</tr>
 			</table>
 		</form>

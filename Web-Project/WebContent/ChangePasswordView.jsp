@@ -28,7 +28,7 @@
 		<%
 			}
 		%>
-		<form action="ChangePasswordCtl" method="post">
+		<form action="ChangePasswordCtl.do" method="post">
 			<table>
 				<tr>
 					<th>Old Password</th>

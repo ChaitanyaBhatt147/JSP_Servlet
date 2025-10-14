@@ -15,7 +15,7 @@ import com.rays.bean.UserBean;
 import com.rays.model.UserModel;
 
 
-@WebServlet("/ChangePasswordCtl")
+@WebServlet("/ChangePasswordCtl.do")
 public class ChangePasswordCtl extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

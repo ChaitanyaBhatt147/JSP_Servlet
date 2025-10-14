@@ -12,7 +12,7 @@
 	<%@ include file="Header.jsp"%>
 	<div align="center">
 		<h3>User List</h3>
-		<form action="UserListCtl" method="post">
+		<form action="UserListCtl.do" method="post">
 			<table>
 				<tr>
 					<th>Search</th>
@@ -72,7 +72,7 @@
 					<td><%=bean.getLastName()%></td>
 					<td><%=bean.getLogin()%></td>
 					<td><%=bean.getDob()%></td>
-					<td><a href="UserCtl?id=<%=bean.getId()%>">edit</a></td>
+					<td><a href="UserCtl.do?id=<%=bean.getId()%>">edit</a></td>
 				</tr>
 				<%
 					}
