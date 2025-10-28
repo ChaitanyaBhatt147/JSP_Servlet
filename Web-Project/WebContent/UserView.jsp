@@ -51,30 +51,31 @@
 					<th>First Name</th>
 					<td><input type="text" name="firstName"
 						value="<%=bean != null ? bean.getFirstName() : ""%>"
-						placeholder="Enter First Name"></td>
+						placeholder="Enter First Name"><span style="color: red"><%=request.getAttribute("firstName") != null ? request.getAttribute("firstName") : ""%></span></td>
 				</tr>
 				<tr>
 					<th>Last Name</th>
 					<td><input type="text" name="lastName"
 						value="<%=bean != null ? bean.getLastName() : ""%>"
-						placeholder="Enter Last Name"></td>
+						placeholder="Enter Last Name"><span style="color: red"><%=request.getAttribute("lastName") != null ? request.getAttribute("lastName") : ""%></span></td>
 				</tr>
 				<tr>
 					<th>Email</th>
 					<td><input type="email" name="login"
 						value="<%=bean != null ? bean.getLogin() : ""%>"
-						placeholder="Enter Email"></td>
+						placeholder="Enter Email"><span style="color: red"><%=request.getAttribute("login") != null ? request.getAttribute("login") : ""%></span></td>
 				</tr>
 				<tr>
 					<th>Password</th>
 					<td><input type="password" name="password"
 						value="<%=bean != null ? bean.getPassword() : ""%>"
-						placeholder="Enter Password"></td>
+						placeholder="Enter Password"><span style="color: red"><%=request.getAttribute("password") != null ? request.getAttribute("password") : ""%></span></td>
 				</tr>
 				<tr>
 					<th>DOB</th>
 					<td><input type="date" name="dob"
-						value="<%=bean != null ? bean.getDob() : ""%>"></td>
+						value="<%=bean != null ? bean.getDob() : ""%>"><span
+						style="color: red"><%=request.getAttribute("dob") != null ? request.getAttribute("dob") : ""%></span></td>
 				</tr>
 				<tr>
 					<th></th>
