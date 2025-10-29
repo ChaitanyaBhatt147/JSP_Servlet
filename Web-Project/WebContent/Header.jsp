@@ -31,6 +31,8 @@
 	<a href="MyProfileCtl">My Profile</a> |
 	<a href="UserListCtl.do">User List</a> |
 	<a href="UserCtl.do">Add User</a> |
+	<a href="OrderListCtl">Order List</a> |
+	<a href="AddOrderCtl">Add Order</a> |
 	<a href="ChangePasswordCtl.do">Change Password</a> |
 	<a href="LoginCtl?operation=logout">Logout</a> 
 	<%
