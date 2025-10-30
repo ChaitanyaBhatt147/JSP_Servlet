@@ -21,8 +21,6 @@
 						placeholder="Search by Shope name"></td>
 					<td><input type="text" name="searchByProductName" value=""
 						placeholder="Search by Product name"></td>
-					<td><input type="text" name="searchByPrice" value=""
-						placeholder="Search by price"></td>
 					<td><input type="date" name="searchByDop" value=""
 						placeholder="Search by DOP"></td>
 					<td><input type="submit" name="operation" value="search"></td>

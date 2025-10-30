@@ -119,20 +119,20 @@ public class OrderModel {
 		StringBuffer sql = new StringBuffer("select * from orders where 1 = 1");
 		if (bean != null) {
 			if (bean.getShopeName() != null && bean.getShopeName().length() > 0) {
-				sql.append(" and firstName like '%" + bean.getShopeName() + "%'");
+				sql.append(" and shopeName like '%" + bean.getShopeName() + "%'");
 			}
 			if (bean.getId() > 0 && bean.getId() < nextPk()) {
 				sql.append(" and id like '%" + bean.getId() + "%'");
 			}
 			if (bean.getProdectName() != null && bean.getProdectName().length() > 0) {
-				sql.append(" and lastName like '%" + bean.getProdectName() + "%'");
+				sql.append(" and productName like '%" + bean.getProdectName() + "%'");
 			}
 			if (bean.getPrice() != 0 && bean.getPrice() > 0) {
-				sql.append(" and login like '%" + bean.getPrice() + "%'");
+				sql.append(" and price like '%" + bean.getPrice() + "%'");
 			}
 			
 			if (bean.getDop() != null && bean.getDop().getTime() > 0) {
-				sql.append(" and dob = '" + new java.sql.Date(bean.getDop().getTime()) + "'");
+				sql.append(" and dop = '" + new java.sql.Date(bean.getDop().getTime()) + "'");
 			}
 		}
 		if (pageSize > 0) {

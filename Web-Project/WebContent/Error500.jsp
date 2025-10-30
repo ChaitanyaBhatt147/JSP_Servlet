@@ -12,7 +12,7 @@
 		<hr>
 		<img src="img/error500.webp">
 		<hr>
-		<a href=WelcomeCtl>Go to home Page</a>
+		<a href="WelcomeCtl">Go to home Page</a>
 	</div>
 </body>
 </html>

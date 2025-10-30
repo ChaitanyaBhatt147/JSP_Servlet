@@ -43,7 +43,7 @@ public class LoginCtl extends HttpServlet {
 			if (bean != null) {
 				System.out.println("Login Successfull");
 				session.setAttribute("user", bean);	
-				response.sendRedirect("WelcomeView.jsp	");
+				response.sendRedirect("WelcomeView.jsp");
 			} else {
 				request.setAttribute("errorMsg", "Invalid login or password");
 				RequestDispatcher rd = request.getRequestDispatcher("LoginView.jsp");

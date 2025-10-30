@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class WelcomeCtl extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		response.sendRedirect("WelconeView.jsp");
+		response.sendRedirect("WelcomeView.jsp");
 	}
 
 

@@ -70,7 +70,6 @@ public class OrderListCtl extends HttpServlet {
 		if (request.getParameter("operation").equals("search")) {
 				bean.setShopeName(request.getParameter("searchByShopeName"));
 				bean.setProdectName(request.getParameter("searchByProductName"));
-				bean.setPrice(Double.parseDouble(request.getParameter("searchByPrice")));
 				try {
 					bean.setDop(sdf.parse(request.getParameter("searchByDop")));
 				} catch (ParseException e1) {
